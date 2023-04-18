@@ -6,7 +6,8 @@ from flask import jsonify
 app = Flask(__name__)
 
 dbhost = "localhost"
-dbname = "stream"
+dbname = "if4040"
+dbtable = "social_media"
 
 # connect to postgresql server
 dbconn = psycopg2.connect(
@@ -20,8 +21,8 @@ def getstreamdata():
     social_media = request.args.get('social_media', default=None)
     if start_time is None or end_time is None:
         return "Invalid request", 500
-    SQL_GET_STREAM_CMD = f"""SELECT SUM(count), SUM(unique_count)
-                             FROM {dbname}
+    SQL_GET_STREAM_CMD = f"""SELECT timestamp, count, unique_count
+                             FROM {dbtable}
                              WHERE timestamp BETWEEN \'{start_time}\' AND \'{end_time}\'"""
     if social_media is not None:
         SQL_GET_STREAM_CMD += f""" AND social_media LIKE \'{social_media}\'"""
