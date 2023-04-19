@@ -30,10 +30,13 @@ def get_precomputed_view():
         return "Invalid request", 501
     else:
         try:
-            datetime.strptime(start_time, '%Y-%m-%d %H:%M')
-            datetime.strptime(end_time, '%Y-%m-%d %H:%M')
+            start_datetime = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
+            end_datetime = datetime.strptime(end_time, '%Y-%m-%d %H:%M')
+            if end_datetime < start_datetime:
+                raise ValueError
         except ValueError:
-            return "Invalid time parameters (must be in YYYY-MM-DD HH:MM format)", 501
+            return "Invalid time parameters", 501
+
     SQL_GET_STREAM_CMD = f"""SELECT timestamp, count, unique_count, social_media
                              FROM {dbtable}
                              WHERE timestamp BETWEEN \'{start_time}\' AND \'{end_time}\'"""
