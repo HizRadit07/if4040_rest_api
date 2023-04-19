@@ -38,7 +38,7 @@ def getstreamdata():
                              FROM {dbtable}
                              WHERE timestamp BETWEEN \'{start_time}\' AND \'{end_time}\'"""
     if social_media is not None:
-        SQL_GET_STREAM_CMD += f""" AND social_media LIKE \'{social_media}\'"""
+        SQL_GET_STREAM_CMD += f""" AND LOWER(social_media) LIKE LOWER(\'{social_media}\')"""
     SQL_GET_STREAM_CMD += ";"
     with dbconn.cursor(cursor_factory=RealDictCursor) as cursor:
         cursor.execute(SQL_GET_STREAM_CMD)
