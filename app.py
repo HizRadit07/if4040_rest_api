@@ -27,13 +27,13 @@ def getstreamdata():
     end_time = request.args.get('end')
     social_media = request.args.get('social_media', default=None)
     if start_time is None or end_time is None:
-        return "Invalid request", 500
+        return "Invalid request", 501
     else:
         try:
             datetime.strptime(start_time, '%Y-%m-%d %H:%M')
             datetime.strptime(end_time, '%Y-%m-%d %H:%M')
         except ValueError:
-            return "Invalid time parameters (must be in YYYY-MM-DD HH:MM format)", 500
+            return "Invalid time parameters (must be in YYYY-MM-DD HH:MM format)", 501
     SQL_GET_STREAM_CMD = f"""SELECT timestamp, count, unique_count
                              FROM {dbtable}
                              WHERE timestamp BETWEEN \'{start_time}\' AND \'{end_time}\'"""
