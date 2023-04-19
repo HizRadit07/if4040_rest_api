@@ -22,7 +22,7 @@ dbconn = psycopg2.connect(
         )
 
 @app.get('/precomputed_view')
-def getstreamdata():
+def get_precomputed_view():
     start_time = request.args.get('start')
     end_time = request.args.get('end')
     social_media = request.args.get('social_media', default=None)
