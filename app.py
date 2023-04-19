@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from flask import Flask
 from flask import request
@@ -39,16 +40,7 @@ def getstreamdata():
     if social_media is not None:
         SQL_GET_STREAM_CMD += f""" AND social_media LIKE \'{social_media}\'"""
     SQL_GET_STREAM_CMD += ";"
-    with dbconn.cursor() as cursor:
+    with dbconn.cursor(cursor_factory=RealDictCursor) as cursor:
         cursor.execute(SQL_GET_STREAM_CMD)
-        query_result = cursor.fetchone()
-    if query_result is not None:
-        total_count = query_result[0]
-        total_unique_count = query_result[1]
-    else:
-        total_count = 0
-        total_unique_count = 0
-    return jsonify(
-            count=total_count,
-            unique_count=total_unique_count
-            )
+        query_result = cursor.fetchall()
+    return jsonify(result=query_result)
