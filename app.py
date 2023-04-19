@@ -9,11 +9,16 @@ app = Flask(__name__)
 dbhost = "localhost"
 dbname = "if4040"
 dbtable = "social_media"
+# dbuser = "postgres"
+# dbpwd = "postgres"
 
 # connect to postgresql server
 dbconn = psycopg2.connect(
         host=dbhost,
-        database=dbname)
+        database=dbname,
+        # user=dbuser,
+        # password=dbpwd
+        )
 
 @app.get('/streamapi')
 def getstreamdata():
