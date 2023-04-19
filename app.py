@@ -34,7 +34,7 @@ def get_precomputed_view():
             datetime.strptime(end_time, '%Y-%m-%d %H:%M')
         except ValueError:
             return "Invalid time parameters (must be in YYYY-MM-DD HH:MM format)", 501
-    SQL_GET_STREAM_CMD = f"""SELECT timestamp, count, unique_count
+    SQL_GET_STREAM_CMD = f"""SELECT timestamp, count, unique_count, social_media
                              FROM {dbtable}
                              WHERE timestamp BETWEEN \'{start_time}\' AND \'{end_time}\'"""
     if social_media is not None:
