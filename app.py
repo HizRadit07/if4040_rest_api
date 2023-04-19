@@ -21,7 +21,7 @@ dbconn = psycopg2.connect(
         # password=dbpwd
         )
 
-@app.get('/streamapi')
+@app.get('/precomputed_view')
 def getstreamdata():
     start_time = request.args.get('start')
     end_time = request.args.get('end')
